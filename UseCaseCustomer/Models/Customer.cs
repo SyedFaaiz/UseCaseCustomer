@@ -24,7 +24,7 @@ namespace UseCaseCustomer.Models
         [Required(ErrorMessage = "Please enter your street address")]
         public string Street { get; set; }
 
-        [EmailAddress]
+      
         [Required(ErrorMessage = "Please enter your postal code")]
         public string PostalCode { get; set; }
 
