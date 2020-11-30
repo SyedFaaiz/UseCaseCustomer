@@ -48,7 +48,7 @@ namespace UseCaseCustomer.Controllers
 
 
             Repository.AddCustomer(customer);
-            return View("Customer", customer);
+            return View("CustomerList", customer);
         }
 
 
