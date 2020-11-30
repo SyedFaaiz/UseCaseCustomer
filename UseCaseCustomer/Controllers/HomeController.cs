@@ -13,6 +13,7 @@ namespace UseCaseCustomer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        private static string saveUserInfo;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -34,30 +35,52 @@ namespace UseCaseCustomer.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpPost]
+   //     [HttpPost]
         public IActionResult HomePage(Customer customer)
         {
+
+           
             if (!ModelState.IsValid)
                 return View();
 
             if (Repository.Customers.Any(p => p.Email == customer.Email))
             {
-                return Content("A user with this email address already exists. Do you want to login?");
-                
+                saveUserInfo = (customer.Name);
+                return View("HomePage");
             }
 
 
-            Repository.AddCustomer(customer);
-            return View("CustomerList", customer);
+            
+            else
+            {
+                Repository.AddCustomer(customer);
+                return RedirectToAction("Dashboard", customer);
+            }
         }
 
-
-        [HttpGet]
-        public IActionResult HomePage()
+        public IActionResult Dashboard(Customer user)
         {
-            return View();
+
+
+            if (Repository.Customers.Any(p => p.Email != user.Email))
+            {
+                return Content($"Hi {saveUserInfo}, your email doesn't match to the account you signed up for");
+            }
+
+
+            else
+            {
+                return View("Dashboard", user);
+            }
         }
 
+        /*
+                [HttpGet]
+                public IActionResult HomePage()
+                {
+                    return View();
+                }
+        */
         public IActionResult CustomerList()
         {
             return View(Repository.Customers);
