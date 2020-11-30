@@ -1,0 +1,70 @@
+﻿@model Customer
+
+@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="/lib.bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+</head>
+
+<body class="container">
+    <p class="alert alert-primary">This is the Home Page</p>
+    <form asp-action="HomePage" method="post">
+
+        <div asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label asp-for="Name">Enter Name:</label>
+            <input class="form-control" asp-for="Name" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email">Enter Email:</label>
+            <input class="form-control" asp-for="Email" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password">Enter Password:</label>
+            <input class="form-control" asp-for="Password" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="City">Enter City:</label>
+            <input class="form-control" asp-for="City" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Street">Enter Street:</label>
+            <input class="form-control" asp-for="Street" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PostalCode">Enter Postal Code:</label>
+            <input class="form-control" asp-for="PostalCode" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Year">Enter Year:</label>
+            <input class="form-control" asp-for="Year" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Make">Enter Make:</label>
+            <input class="form-control" asp-for="Make" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Model">Enter Model:</label>
+            <input class="form-control" asp-for="Model" />
+        </div>
+        <div class="form-group">
+            <label asp-for="VIN">Enter VIN:</label>
+            <input class="form-control" asp-for="VIN" />
+        </div>
+        <div class="text-center">
+            <button type="submit">Login</button>
+        </div>
+    </form>
+</body>
+</html>

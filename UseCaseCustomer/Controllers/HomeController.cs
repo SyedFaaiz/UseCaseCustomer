@@ -33,5 +33,35 @@ namespace UseCaseCustomer.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public IActionResult HomePage(Customer customer)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            if (Repository.Customers.Any(p => p.Email == customer.Email))
+            {
+                return Content("A user with this email address already exists. Do you want to login?");
+                
+            }
+
+
+            Repository.AddCustomer(customer);
+            return View("Customer", customer);
+        }
+
+
+        [HttpGet]
+        public IActionResult HomePage()
+        {
+            return View();
+        }
+
+        public IActionResult CustomerList()
+        {
+            return View(Repository.Customers);
+        }
+
     }
 }
