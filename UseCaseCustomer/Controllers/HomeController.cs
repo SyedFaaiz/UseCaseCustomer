@@ -14,9 +14,12 @@ namespace UseCaseCustomer.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private static string saveUserInfo;
+
+        private CustomersDatabase _customersDb;
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _customersDb = new CustomersDatabase();
         }
 
         public IActionResult Index()
@@ -34,7 +37,7 @@ namespace UseCaseCustomer.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
+        /*
    //     [HttpPost]
         public IActionResult HomePage(Customer customer)
         {
@@ -57,7 +60,8 @@ namespace UseCaseCustomer.Controllers
                 return RedirectToAction("Dashboard", customer);
             }
         }
-
+        */
+        /*
         public IActionResult Dashboard(Customer user)
         {
 
@@ -73,17 +77,74 @@ namespace UseCaseCustomer.Controllers
                 return View("Dashboard", user);
             }
         }
-
-        /*
-                [HttpGet]
-                public IActionResult HomePage()
-                {
-                    return View();
-                }
         */
+
+        
+                
+        public IActionResult HomePage()
+        {
+            return View();
+        }
+        
+
+        [HttpPost]
+        public IActionResult SaveCustomer(Customer customer)
+        {
+            if (!ModelState.IsValid)
+                return View("Homepage");
+
+            if (customer.Id == null)
+                _customersDb.Customers.Add(customer);
+
+            else
+            {
+                var customerInDb = _customersDb.Customers.Find(customer.Id);
+                customerInDb.Name = customer.Name;
+                customerInDb.Email = customer.Email;
+                customerInDb.Year = customer.Year;
+                customerInDb.Make = customer.Make;
+                customerInDb.Model = customer.Model;
+
+            }
+
+            _customersDb.SaveChanges();
+            return RedirectToAction("CustomerList");
+        }
+
+        [Route("home/customers/delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var customersToBeDeleted = _customersDb.Customers.Find(id);
+
+            if (customersToBeDeleted == null)
+                return NotFound();
+
+            _customersDb.Customers.Remove(customersToBeDeleted);
+            _customersDb.SaveChanges();
+
+
+            return RedirectToAction("CustomerList");
+        }
+
+
+        [Route("home/customers/edit/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var customersToBeEdited = _customersDb.Customers.Find(id);
+
+            if (customersToBeEdited == null)
+                return NotFound();
+
+
+
+
+            return View("Homepage", customersToBeEdited);
+        }
+
         public IActionResult CustomerList()
         {
-            return View(Repository.Customers);
+            //  return View(Repository.Customers);
+            return View();
         }
 
     }

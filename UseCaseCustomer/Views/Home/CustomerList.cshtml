@@ -22,8 +22,8 @@
                 <th scope="col">Vehicle Year</th>
                 <th scope="col">Vehicle Make</th>
                 <th scope="col">Vehicle Model</th>
-              
-
+                <th scope="col">Actions</th>
+  
             </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                 <td>@customer.Year</td>
                 <td>@customer.Make</td>
                 <td>@customer.Model</td>
-    
+              <td><a href="/bome/customers/edit/@customer.Id"> Edit</a> | <a href="/home/customers/delete/@customer.Id">Delete</a></td> 
 
 
             </tr>
